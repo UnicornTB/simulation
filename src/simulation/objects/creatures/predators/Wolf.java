@@ -6,7 +6,7 @@ public class Wolf extends Predator{
         this.view = "Wo";
         this.damage = 1;
         this.hp = 3;
-        this.damageRange = 2;
+        this.attackRange = 2;
         this.speed = 1;
         this.eatRange = 1;
         return super.init();

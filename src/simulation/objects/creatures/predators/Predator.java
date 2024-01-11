@@ -6,7 +6,7 @@ public abstract class Predator extends Creature {
 
     protected int damage;
 
-    protected int damageRange;
+    protected int attackRange;
 
     public abstract void dealDamage();
 
@@ -15,7 +15,7 @@ public abstract class Predator extends Creature {
     }
 
     public int getDamageRange(){
-        return this.damageRange;
+        return this.attackRange;
     }
 
     public void setDamage(int damage){
@@ -23,7 +23,7 @@ public abstract class Predator extends Creature {
     }
 
     public void setDamageRange(int damageRange){
-        this.damageRange = damageRange;
+        this.attackRange = damageRange;
     }
 
 }

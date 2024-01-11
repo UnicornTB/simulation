@@ -16,6 +16,7 @@ public class Simulation {
     public void startSimulation(){
         System.out.println(HELLO_MESSAGE);
         System.out.println(getMapSizeFromUser());
+
     }
 
     public void nextTurn(){

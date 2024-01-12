@@ -2,6 +2,10 @@ package simulation.objects;
 
 public abstract class Entity {
 
+    public Entity(){
+        init();
+    }
+
     protected String view;
 
     public String init(){return getView();}

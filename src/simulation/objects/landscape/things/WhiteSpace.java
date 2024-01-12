@@ -2,10 +2,11 @@ package simulation.objects.landscape.things;
 
 import simulation.objects.Entity;
 
-public class Tree extends Entity {
+public class WhiteSpace extends Entity {
+
     @Override
-    public String init() {
-        this.view = "Tr";
+    public String init(){
+        this.view = "  ";
         return super.init();
     }
 }

@@ -2,16 +2,19 @@ package menustaff.actions.init;
 
 import menustaff.SimulationMap;
 import simulation.objects.Entity;
+import simulation.objects.creatures.Creature;
 import simulation.objects.creatures.herbivores.Rabbit;
 import simulation.objects.creatures.predators.Wolf;
 import simulation.objects.landscape.resources.Grass;
 import simulation.objects.landscape.things.Rock;
 import simulation.objects.landscape.things.Tree;
+import simulation.objects.landscape.things.WhiteSpace;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class EntitiesGenerator {
 
@@ -31,25 +34,33 @@ public class EntitiesGenerator {
         }
     }
 
+    public void generate(SimulationMap simulationMap, int mapSize, Map<String, Integer> newElements){
+        for (Map.Entry<String, Integer> entry : newElements.entrySet()){
+            putEntityToMap(simulationMap, mapSize, entry);
+        }
+    }
+
     private Map<String, Integer> getEntitiesCounts(int mapSize){
-        if (mapSize >= 8 && mapSize < 16){
-            return new HashMap<>(Map.of("Herbivore", 2, "Predator", 1, "Thing", 2, "Resources", 3));
+        if (mapSize >= 16 && mapSize < 32){
+            return new HashMap<>(Map.of("Herbivore", 2, "Predator", 1, "Thing", 2, "Resource", 3));
         }
 
-        if(mapSize >= 16 && mapSize < 32){
-            return new HashMap<>(Map.of("Herbivore", 4, "Predator", 2, "Thing", 4, "Resources", 6));
+        if(mapSize >= 32 && mapSize < 64){
+            return new HashMap<>(Map.of("Herbivore", 4, "Predator", 2, "Thing", 4, "Resource", 6));
         }
 
-        return new HashMap<>(Map.of("Herbivore", 8, "Predator", 3, "Thing", 8, "Resources", 12));
+        return new HashMap<>(Map.of("Herbivore", 8, "Predator", 3, "Thing", 8, "Resource", 12));
 
     }
 
     private int generatePosition(SimulationMap simulationMap, int mapSize){
-        Set<Integer> occupiedPositions = simulationMap.getPositions();
+        Set<Integer> occupiedPositions = simulationMap.getPairs().stream().filter(entry -> !(entry.getValue() instanceof WhiteSpace))
+                                                                            .map(Map.Entry::getKey)
+                                                                            .collect(Collectors.toSet());
         int possiblePosition = RANDOM.nextInt(mapSize * mapSize);
 
         if (occupiedPositions.contains(possiblePosition)){
-            generatePosition(simulationMap, mapSize);
+            possiblePosition = generatePosition(simulationMap, mapSize);
         }
 
         int step = mapSize - 1;
@@ -62,7 +73,7 @@ public class EntitiesGenerator {
                             occupiedPositions.contains(possiblePosition - step + 1) ||
                             occupiedPositions.contains(possiblePosition - step - 1);
         if(condition){
-            generatePosition(simulationMap, mapSize);
+            possiblePosition = generatePosition(simulationMap, mapSize);
         }
 
         return possiblePosition;

@@ -2,9 +2,7 @@ package menustaff;
 
 import simulation.objects.Entity;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class SimulationMap {
 
@@ -26,10 +24,8 @@ public class SimulationMap {
         return this.entitiesLocation.entrySet();
     }
 
-    public Map<Integer, Entity> getEntitiesLocation(){
-        return this.entitiesLocation;
-    }
-
+    public Map<Integer, Entity> getEntitiesLocation(){return this.entitiesLocation;}
+    public Collection<Entity> getEntities(){return this.entitiesLocation.values();}
     public void setEntitiesLocation(Map<Integer, Entity> entitiesLocation){
         this.entitiesLocation = entitiesLocation;
     }

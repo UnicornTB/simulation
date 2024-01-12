@@ -1,6 +1,5 @@
 import menustaff.SimulationMap;
-import menustaff.actions.init.EntitiesGenerator;
-import menustaff.actions.init.WhiteSpaceGenerator;
+import menustaff.actions.Actions;
 import simulation.objects.Entity;
 
 import java.util.Map;
@@ -12,18 +11,20 @@ public class Simulation {
 
     private final Scanner scanner = new Scanner(System.in);
 
+    private Actions actions = Actions.getInstance();
+
     private static final String HELLO_MESSAGE = "Welcome to the simulation!!!" +
                                                 '\n'+
-                                                "Enter map size!!!(Min size 8)";
+                                                "Enter map size!!!(Min size 16)";
     private int mapSize;
 
     public void startSimulation(){
         System.out.println(HELLO_MESSAGE);
         mapSize = getMapSizeFromUser();
-        EntitiesGenerator entitiesGenerator = EntitiesGenerator.getInstance();
-        entitiesGenerator.generate(simulationMap, mapSize);
-        WhiteSpaceGenerator whiteSpaceGenerator = WhiteSpaceGenerator.getInstance();
-        whiteSpaceGenerator.generate(simulationMap, mapSize);
+        actions.entitiesGenerator.generate(simulationMap, mapSize);
+        actions.whiteSpaceGenerator.generate(simulationMap, mapSize);
+        actions.mapRenderer.render(simulationMap, mapSize);
+
     }
 
     public void nextTurn(){
@@ -42,8 +43,8 @@ public class Simulation {
             System.out.println("Enter a number!");
             mapSize = getMapSizeFromUser();
         }
-        if (mapSize < 8){
-            System.out.println("Min map size 8!");
+        if (mapSize < 16){
+            System.out.println("Min map size 16!");
             mapSize = getMapSizeFromUser();
         }
         return mapSize;
